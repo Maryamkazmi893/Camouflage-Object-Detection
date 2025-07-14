@@ -55,6 +55,23 @@ class Solver(object):
         self.optimizer = torch.optim.Adam(self.net.parameters(), lr=self.config.lr, weight_decay=self.config.wd)
         self.print_network(self.net, 'Conformer-based RGB COD Model')
 
+
+    #print the network information and parameter numbers
+    def print_network(self, model, name):
+        num_params_t = 0
+        num_params=0
+        for p in model.parameters():
+            if p.requires_grad:
+                num_params_t += p.numel()
+            else:
+                num_params += p.numel()
+        print(name)
+        #print(model)
+        print("The number of trainable parameters: {}".format(num_params_t))
+        print("The number of parameters: {}".format(num_params))
+        print(f'Flops: {count_model_flops(model)}')
+        print(f'Flops: {count_model_params(model)}')
+
     def test(self):
         print('Testing RGB COD...')
         self.net.eval()
