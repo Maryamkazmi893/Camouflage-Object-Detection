@@ -104,8 +104,8 @@ class Solver(object):
             self.net.train()
 
             for i, data_batch in enumerate(self.train_loader):
-                images = data_batch['image']
-                labels = data_batch['label']
+                images = data_batch['sal_image']
+                labels = data_batch['sal_label']
 
                 if self.config.cuda:
                     images, labels = images.cuda(), labels.cuda()
