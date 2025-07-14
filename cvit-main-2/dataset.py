@@ -146,8 +146,13 @@ def cv_random_crop_rgb_gt(image, label, image_size):
 
 
 def Normalization(image):
-    in_ = image[:, :, ::-1] / 255.0
+    if len(image.shape) == 2:  # grayscale (2D)
+        image = np.stack([image]*3, axis=-1)  # Convert to 3-channel RGB-like
+
+    in_ = image[:, :, ::-1]  # Convert BGR to RGB
+    in_ = in_ / 255.0
     in_ -= np.array((0.485, 0.456, 0.406))
     in_ /= np.array((0.229, 0.224, 0.225))
     return in_
+
 
