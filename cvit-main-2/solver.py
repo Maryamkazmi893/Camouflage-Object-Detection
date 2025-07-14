@@ -42,10 +42,12 @@ class Solver(object):
         elif config.mode == 'train':
             if self.config.load == '':
                 print("Loading pre-trained ImageNet weights")
-                self.net.load_pretrained_model(self.config.pretrained_model)
+                self.net.load_state_dict(torch.load(self.config.pretrained_model), strict=False)
             else:
                 print('Resuming training from checkpoint')
-                self.net.load_state_dict(torch.load(self.config.load))
+                self.net.load_state_dict(torch.load(self.config.load), strict=False)
+
+
 
         if self.config.cuda:
             self.net = self.net.cuda()
